@@ -1,19 +1,19 @@
 <thead>
   <tr>
     <th scope="col">
-      <%= link_to_remote "topic", { :url => forum_path({:forum => @forum, :order => "title", :page => @page, :asc => @asc}), :method => :get, :update => "topics_paginated" } %>
+      <%= link_to_remote "topic", { :url => forum_path(@forum, {:order => "title", :page => @page, :asc => @asc}), :method => :get, :update => "topics_paginated" } %>
     </th>
     <th scope="col">
-      <%= link_to_remote "posts", { :url => forum_path({:forum => @forum, :order => "posts_count", :page => @page, :asc => @asc}), :method => :get, :update => "topics_paginated" } %>
+      <%= link_to_remote "posts", { :url => forum_path(@forum, {:order => "posts_count", :page => @page, :asc => @asc}), :method => :get, :update => "topics_paginated" } %>
     </th>
     <th scope="col">
-      <%= link_to_remote "author", { :url => forum_path({:forum => @forum, :order => "user_id", :page => @page, :asc => @asc}), :method => :get, :update => "topics_paginated" } %>
+      <%= link_to_remote "author", { :url => forum_path(@forum,{ :order => "user_id", :page => @page, :asc => @asc}), :method => :get, :update => "topics_paginated" } %>
     </th>
     <th scope="col">
-      <%= link_to_remote "last post", { :url => forum_path({:forum => @forum, :order => "last_post_at", :page => @page, :asc => @asc}), :method => :get, :update => "topics_paginated" } %>
+      <%= link_to_remote "last post", { :url => forum_path( @forum,{ :order => "last_post_at", :page => @page, :asc => @asc}), :method => :get, :update => "topics_paginated" } %>
     </th>
     <th scope="col">
-      <%= link_to_remote "rating", { :url => forum_path({:forum => @forum, :order => "current_rating", :page => @page, :asc => @asc}), :method => :get, :update => "topics_paginated" } %>
+      <%= link_to_remote "rating", { :url => forum_path( @forum,{ :order => "current_rating", :page => @page, :asc => @asc}), :method => :get, :update => "topics_paginated" } %>
     </th>
     <% if admin? %>
       <th scope="col">

@@ -10,8 +10,8 @@ class ForumsController < ApplicationController
       index_for_admin
     else
       @forum = TogForum::Forum.top_level
-      @topics = @forum.topics.paginate(:all, {:order => "current_rating DESC", :page => options[:page] || 1, :per_page => options[:per_page] || 10}) rescue []
-      
+      @topics = @forum.topics.paginate(:all, {:page => 1, :per_page => 10}) rescue []
+
       render :action => "show"
     end
   end
@@ -28,16 +28,13 @@ class ForumsController < ApplicationController
   # GET /forums/1
   # GET /forums/1.xml
   def show
-    @order = params[:order] || 'tog_forum_topics.current_rating'
-
     @page = params[:page] || '1'
     @asc = (params[:asc] and params[:asc] == "desc") ? "asc" : 'desc'
 
     @forum = TogForum::Forum.top_level
     @topics = TogForum::Topic.paginate :per_page => Tog::Config["plugins.tog_social.profile.list.page.size"],
                                        :page => @page,
-                                       :conditions => ['tog_forum_topics.forum_id = ?', @forum.id],
-                                       :order => @order + " " + @asc
+                                       :conditions => ['tog_forum_topics.forum_id = ?', @forum.id]
     
     respond_to do |format|
       format.js { render :partial => "/forums/partials/topics_paginated" }

@@ -1,10 +1,7 @@
 <div class="portlet portletB clearfix" id="topic_posts_list">
-  <h2><span><%= @forum.title %>: <%= white_list @topic.title %></span></h2>
+  <h2><span><%=h @forum.title %>: <%= white_list @topic.title %></span></h2>
   <div class="detail detail1" style="clear: both; width: 100%;">
     <div>
-      <div id="ratings_graph_box" class="clearfix" style="margin-bottom: 20px;">
-        <%= render :partial => "/home/partials/ratings_graph", :locals => {:voteable => @topic} %>
-      </div>
 
       <%= render :partial => "/topics/partials/original_topic", :object => @topic %>
       <br />

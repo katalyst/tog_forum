@@ -1,6 +1,6 @@
 <a name="post_<%= post.id %>"></a>
 <tr class="pair">
-  <td width="50%"><%= link_to post.user_login, profile_path(post.poster_profile) %></td>
+  <td width="50%"><%= profile = Profile.find_by_user_id(post.user_id); link_to profile.displayed_name, profile_path(profile) %></td>
   <td width="50%" align="right">
     <%= post.updated_at.to_formatted_s(:forums) %>
     <% if admin? %>
