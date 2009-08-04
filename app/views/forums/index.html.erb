@@ -7,7 +7,6 @@
           <th scope="col">title</th>
           <th scope="col">topics</th>
           <th scope="col">last post</th>
-          <th scope="col">rating</th>
         </tr>
       </thead>
       <% if @forums.blank? %>
@@ -31,8 +30,9 @@
              <td><%= link_to white_list(forum.title), forum_path(:id => forum) %></td>
              <td><%= forum.topics.size %></td>
              <td><%= forum.updated_at.to_formatted_s(:db) %></td>
-             <td><%= "" %></td>
-             <td><%= link_to image_tag('/images/icons/delete.png'), forum_url(forum), :confirm => "Are you sure?", :method => :delete %></td>
+						 <% if current_user.admin? %>
+             	 <td><%= link_to image_tag('/images/icons/delete.png'), forum_url(forum), :confirm => "Are you sure?", :method => :delete %></td>
+						 <% end %>
           </tr>
         <%end%>
         </tbody>

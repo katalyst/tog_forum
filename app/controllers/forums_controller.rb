@@ -6,17 +6,6 @@ class ForumsController < ApplicationController
   # GET /forums
   # GET /forums.xml
   def index
-    if admin?
-      index_for_admin
-    else
-      @forum = TogForum::Forum.top_level
-      @topics = @forum.topics.paginate(:all, {:page => 1, :per_page => 10}) rescue []
-
-      render :action => "show"
-    end
-  end
-  
-  def index_for_admin
     @page = params[:page] || '1'
     @forums = TogForum::Forum.all.paginate({:page => @page})
     respond_to do |format|
