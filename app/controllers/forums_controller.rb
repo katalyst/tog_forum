@@ -7,7 +7,7 @@ class ForumsController < ApplicationController
   # GET /forums.xml
   def index
     @page = params[:page] || '1'
-    @forums = TogForum::Forum.all.paginate({:page => @page})
+    @forums = TogForum::Forum.find(:all, :order => 'id ASC').paginate({:page => @page})
     respond_to do |format|
       format.html
       format.rss { render :rss => @forums }    
@@ -20,7 +20,7 @@ class ForumsController < ApplicationController
     @page = params[:page] || '1'
     @asc = (params[:asc] and params[:asc] == "desc") ? "asc" : 'desc'
 
-    @forum = TogForum::Forum.top_level
+    @forum = TogForum::Forum.find(params[:id])
     @topics = TogForum::Topic.paginate :per_page => Tog::Config["plugins.tog_social.profile.list.page.size"],
                                        :page => @page,
                                        :conditions => ['tog_forum_topics.forum_id = ?', @forum.id]
@@ -106,6 +106,13 @@ private
     @forum = TogForum::Forum.find_by_id(params[:id]) || TogForum::Forum.top_level
     if @forum.blank? and Tog::Config["plugins.tog_forum.ensure_top_level"]
       @forum = TogForum::Forum.create_top_level
+    end
+  end
+  
+  def admin?
+    unless current_user.admin?
+      flash[:error] = 'Only administrators can create, edit or delete forums'
+      redirect_to forums_path
     end
   end
 end
